@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "synth" : "cdk synth"
+    "synth" : "cdk synth",
+    "deploy": "cdk deploy --all"
   },
   "keywords": [],
   "author": "",
