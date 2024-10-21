@@ -5,6 +5,7 @@ import { join } from "node:path";
 import { LambdaIntegration } from "aws-cdk-lib/aws-apigateway";
 import { ITable } from "aws-cdk-lib/aws-dynamodb";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
+import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 
 interface LambdaStackProps extends StackProps{
     spacesTable: ITable
@@ -20,11 +21,19 @@ export class LamdbaStack extends Stack{
             runtime: Runtime.NODEJS_18_X,
             handler: "handler",
             entry: join(__dirname, "..", "..", "services", "hello.ts"),
-            // code: Code.fromAsset(join(__dirname, "..", "..", "services")),
             environment: {
                 TABLE_NAME: props.spacesTable.tableName
             }
-        })
+        });
+
+        helloLambda.addToRolePolicy(new PolicyStatement({
+            effect: Effect.ALLOW,
+            actions:[
+                "s3:ListAllMyBuckets",
+                "s3:ListBucket"
+            ],
+            resources: ["*"] // Only for testing, don't use this in prod
+        }))
 
         this.helloLamdbaIntegration = new LambdaIntegration(helloLambda)
     }
