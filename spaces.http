@@ -1,0 +1,6 @@
+
+GET https://kkfzb7iszh.execute-api.eu-central-1.amazonaws.com/prod/spaces
+###
+
+POST https://kkfzb7iszh.execute-api.eu-central-1.amazonaws.com/prod/spaces
+###
