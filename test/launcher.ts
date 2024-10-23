@@ -1,10 +1,12 @@
-import { handler } from "../src/services/hello";
+import { handler } from "../src/services/spaces/handler";
 
 handler({
-    body: "",
+    body: JSON.stringify({
+        location: "London"
+    }),
     headers: undefined,
     multiValueHeaders: undefined,
-    httpMethod: "",
+    httpMethod: "POST",
     isBase64Encoded: false,
     path: "",
     pathParameters: undefined,
