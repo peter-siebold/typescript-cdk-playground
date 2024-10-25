@@ -1,4 +1,5 @@
 import { DynamoDBClient, GetItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
+import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 
 export async function getSpaces(event: APIGatewayProxyEvent, ddbClient: DynamoDBClient): Promise<APIGatewayProxyResult> {
@@ -12,10 +13,11 @@ export async function getSpaces(event: APIGatewayProxyEvent, ddbClient: DynamoDB
                     "id": { S: spaceId }
                 }
             }))
-            if(getItemResponse){
+            if(getItemResponse.Item){
+                const unmarshalledItem = unmarshall(getItemResponse.Item)
                 return {
                     statusCode: 200,
-                    body: JSON.stringify(getItemResponse.Item)
+                    body: JSON.stringify(unmarshalledItem)
                 }
             } else {
                 return {
@@ -36,8 +38,10 @@ export async function getSpaces(event: APIGatewayProxyEvent, ddbClient: DynamoDB
 
     }))
 
+    const unmarshalledResult = result.Items.map(item => unmarshall(item))
+
     return {
         statusCode: 201,
-        body: JSON.stringify(result.Items)
+        body: JSON.stringify(unmarshalledResult)
     }
 }
