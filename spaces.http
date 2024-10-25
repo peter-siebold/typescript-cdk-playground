@@ -24,3 +24,6 @@ Content-Type: application/json
     "location": "Stockholm"
 }
 ###
+
+DELETE https://kkfzb7iszh.execute-api.eu-central-1.amazonaws.com/prod/spaces?id=6464
+###
