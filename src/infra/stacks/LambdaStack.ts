@@ -25,29 +25,16 @@ export class LamdbaStack extends Stack{
                 TABLE_NAME: props.spacesTable.tableName
             }
         });
-        // const helloLambda = new NodejsFunction(this, "HelloLambda", {
-        //     runtime: Runtime.NODEJS_18_X,
-        //     handler: "handler",
-        //     entry: join(__dirname, "..", "..", "services", "hello.ts"),
-        //     environment: {
-        //         TABLE_NAME: props.spacesTable.tableName
-        //     }
-        // });
-
-        // helloLambda.addToRolePolicy(new PolicyStatement({
-        //     effect: Effect.ALLOW,
-        //     actions:[
-        //         "s3:ListAllMyBuckets",
-        //         "s3:ListBucket"
-        //     ],
-        //     resources: ["*"] // Only for testing, don't use this in prod
-        // }))
 
         spacesLambda.addToRolePolicy(new PolicyStatement({
             effect: Effect.ALLOW,
             resources: [ props.spacesTable.tableArn],
             actions:[
-                "dynamodb:PutItem"
+                "dynamodb:PutItem",
+                "dynamodb:Scan",
+                "dynamodb:GetItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem"
             ]
         }))
         this.spacesLamdbaIntegration = new LambdaIntegration(spacesLambda)
