@@ -16,3 +16,11 @@ Content-Type: application/json
 
 GET https://kkfzb7iszh.execute-api.eu-central-1.amazonaws.com/prod/spaces?id=6464
 ###
+
+PUT https://kkfzb7iszh.execute-api.eu-central-1.amazonaws.com/prod/spaces?id=6464
+Content-Type: application/json
+
+{
+    "location": "Stockholm"
+}
+###
