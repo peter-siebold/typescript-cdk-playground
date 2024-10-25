@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "synth": "cdk synth",
-    "deploy": "cdk deploy --all"
+    "deploy": "cdk deploy --all --require-approval never"
   },
   "keywords": [],
   "author": "",
