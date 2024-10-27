@@ -4,21 +4,26 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { validateAsSpaceEntry } from "../shared/Validator";
 import { getRandomId, parseJSON } from "../shared/Utils";
 
-export async function postSpaces(event: APIGatewayProxyEvent, ddbClient: DynamoDBClient): Promise<APIGatewayProxyResult> {
-    const randomId = getRandomId()
-    const item = parseJSON(event.body);
+export async function postSpaces(
+  event: APIGatewayProxyEvent,
+  ddbClient: DynamoDBClient,
+): Promise<APIGatewayProxyResult> {
+  const randomId = getRandomId();
+  const item = parseJSON(event.body);
 
-    item.id = randomId
+  item.id = randomId;
 
-    validateAsSpaceEntry(item)
+  validateAsSpaceEntry(item);
 
-    await ddbClient.send(new PutItemCommand({
-        TableName: process.env.TABLE_NAME,
-        Item: marshall(item)
-    }))
+  await ddbClient.send(
+    new PutItemCommand({
+      TableName: process.env.TABLE_NAME,
+      Item: marshall(item),
+    }),
+  );
 
-    return {
-        statusCode: 201,
-        body: JSON.stringify({ id: randomId })
-    }
+  return {
+    statusCode: 201,
+    body: JSON.stringify({ id: randomId }),
+  };
 }
