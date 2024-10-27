@@ -1,4 +1,4 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from "aws-lambda";
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb"
 import { postSpaces } from "./PostSpaces";
 import { getSpaces } from "./GetSpaces";
@@ -10,24 +10,20 @@ import { JsonError } from "../shared/Utils";
 const ddbClient = new DynamoDBClient({})
 
 
-async function handler(event: APIGatewayProxyEvent, context: Context): Promise<APIGatewayProxyResult> {
+async function handler(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
 
     let message: string;
     try {
 
         switch (event.httpMethod) {
             case "GET":
-                const getResponse = await getSpaces(event, ddbClient)
-                return getResponse;
+                return await getSpaces(event, ddbClient)
             case "POST":
-                const postResponse = await postSpaces(event, ddbClient)
-                return postResponse;
+                return await postSpaces(event, ddbClient)
             case "PUT":
-                const putResponse = await updateSpace(event, ddbClient)
-                return putResponse;
+                return await updateSpace(event, ddbClient)
             case "DELETE":
-                const deleteResponse = await deleteSpace(event, ddbClient)
-                return deleteResponse;
+                return await deleteSpace(event, ddbClient)
             default:
                 break;
         }

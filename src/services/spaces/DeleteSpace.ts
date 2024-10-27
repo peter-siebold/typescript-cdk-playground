@@ -1,5 +1,4 @@
-import { DeleteItemCommand, DynamoDBClient, GetItemCommand, ScanCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
-import { unmarshall } from "@aws-sdk/util-dynamodb";
+import { DeleteItemCommand, DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 
 export async function deleteSpace(event: APIGatewayProxyEvent, ddbClient: DynamoDBClient): Promise<APIGatewayProxyResult> {
@@ -8,7 +7,7 @@ export async function deleteSpace(event: APIGatewayProxyEvent, ddbClient: Dynamo
 
         const spaceId = event.queryStringParameters["id"];
 
-        const deleteResult = await ddbClient.send(new DeleteItemCommand({
+        await ddbClient.send(new DeleteItemCommand({
             TableName: process.env.TABLE_NAME,
             Key: {
                 "id": { S: spaceId }

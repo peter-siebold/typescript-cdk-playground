@@ -12,7 +12,7 @@ export async function postSpaces(event: APIGatewayProxyEvent, ddbClient: DynamoD
 
     validateAsSpaceEntry(item)
 
-    const result = await ddbClient.send(new PutItemCommand({
+    await ddbClient.send(new PutItemCommand({
         TableName: process.env.TABLE_NAME,
         Item: marshall(item)
     }))

@@ -7,7 +7,7 @@ export class MissingFieldError extends Error {
 }
 
 
-export const validateAsSpaceEntry = (arg: any) => {
+export const validateAsSpaceEntry = (arg: unknown) => {
     if((arg as SpaceEntry).location == undefined){
         throw new MissingFieldError("location")
     }

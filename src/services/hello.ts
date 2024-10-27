@@ -1,9 +1,9 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from "aws-lambda";
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { S3Client, ListBucketsCommand } from "@aws-sdk/client-s3";
 
 const s3Client = new S3Client({})
 
-async function handler(event: APIGatewayProxyEvent, context:Context) {
+async function handler(event: APIGatewayProxyEvent) {
     const command = new ListBucketsCommand({});
     const listBucketsResult = (await s3Client.send(command)).Buckets;
 
