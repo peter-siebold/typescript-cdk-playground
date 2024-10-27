@@ -1,4 +1,4 @@
-import { v4 } from "uuid";
+import { randomUUID } from "crypto";
 
 export class JsonError extends Error { }
 
@@ -10,4 +10,4 @@ export const parseJSON = (arg: string) => {
     }
 }
 
-export const getRandomId = () => v4()
+export const getRandomId = () => randomUUID();
